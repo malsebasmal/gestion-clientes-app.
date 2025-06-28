@@ -5,6 +5,7 @@ import cors from "cors"
 const PORT = 3000
 const app = express()
 app.use(cors())
+app.use(express.json())
 
 app.get("/clients", (req, res) => {
   res.json(CLIENTS)
@@ -12,20 +13,42 @@ app.get("/clients", (req, res) => {
 
 app.post("/clients", (req, res) => {
   const {name, email, phoneNumber, enterprise} = req.body
-  res.json({
-    name: name,
-    email: email,
-    phoneNumber: phoneNumber,
-    enterprise: enterprise
-  })
+
+  const newClient = {
+    id: CLIENTS.length + 1,
+    name,
+    email,
+    phoneNumber,
+    enterprise
+  }
+
+  CLIENTS.push(newClient)
+
+  res.status(201).json({newClient})
 })
 
-app.put("/clients:id", (req, res) => {
-  
+app.put("/clients/:id", (req, res) => {
+  const {id} = req.params
+  const clientId = CLIENTS.findIndex(client => client.id === Number(id))
+
+  const {name, email, phoneNumber, enterprise} = req.body
+
+  CLIENTS[clientId] = {
+    id,
+    name,
+    email,
+    phoneNumber,
+    enterprise
+  }
+
+  res.status(202).json(CLIENTS[clientId])
 })
 
-app.delete("/clients:id", (req, res) => {
-  
+app.delete("/clients/:id", (req, res) => {
+  const {id} = req.params
+  const client = CLIENTS.findIndex(client => client.id === Number(id))
+  CLIENTS.splice(client, 1)
+  res.json({message: "movie deleted"})
 })
 
 app.listen(PORT, () => {

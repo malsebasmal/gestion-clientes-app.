@@ -1,0 +1,29 @@
+GET http://localhost:3000/clients
+
+###
+
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+  "name": "Joaquin",
+  "email": "joaquin@gmail.com",
+  "phoneNumber": "111222333",
+  "enterprise": "Good"
+}
+
+###
+
+PUT http://localhost:3000/clients/2
+Content-Type: application/json
+
+{
+  "name": "JoaquinV2",
+  "email": "joaquinV2@gmail.com",
+  "phoneNumber": "111222333",
+  "enterprise": "GoodV2"
+}
+
+###
+
+DELETE http://localhost:3000/clients/2
