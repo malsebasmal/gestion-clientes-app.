@@ -1,6 +1,7 @@
 import express from "express"
 import CLIENTS from "./clients.js"
 import cors from "cors"
+import crypto from "node:crypto"
 
 const PORT = 3000
 const app = express()
@@ -15,7 +16,7 @@ app.post("/clients", (req, res) => {
   const {name, email, phoneNumber, enterprise} = req.body
 
   const newClient = {
-    id: CLIENTS.length + 1,
+    id: crypto.randomUUID(),
     name,
     email,
     phoneNumber,
@@ -29,7 +30,7 @@ app.post("/clients", (req, res) => {
 
 app.put("/clients/:id", (req, res) => {
   const {id} = req.params
-  const clientId = CLIENTS.findIndex(client => client.id === Number(id))
+  const clientId = CLIENTS.findIndex(client => client.id === id)
 
   const {name, email, phoneNumber, enterprise} = req.body
 
@@ -46,7 +47,7 @@ app.put("/clients/:id", (req, res) => {
 
 app.delete("/clients/:id", (req, res) => {
   const {id} = req.params
-  const client = CLIENTS.findIndex(client => client.id === Number(id))
+  const client = CLIENTS.findIndex(client => client.id === id)
   CLIENTS.splice(client, 1)
   res.json({message: "movie deleted"})
 })

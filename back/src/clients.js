@@ -1,20 +1,22 @@
+import crypto from "node:crypto"
+
 const CLIENTS = [
   {
-    id: 1,
+    id: crypto.randomUUID(),
     name: "Antonio",
     email: "antonio@gmail.com",
     phoneNumber: "999000222",
     enterprise: "Amazon"
   },
   {
-    id: 2,
+    id: crypto.randomUUID(),
     name: "Marcos",
     email: "marcos@gmail.com",
     phoneNumber: "999000222",
     enterprise: "Aliexpress"
   },
   {
-    id: 3,
+    id: crypto.randomUUID(),
     name: "Pepe",
     email: "Pepe@gmail.com",
     phoneNumber: "999000222",
