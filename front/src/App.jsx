@@ -38,7 +38,7 @@ function App() {
     e.preventDefault()
     try {
       const response = await axios.post(URLAPI, formData)
-      data.push(response.data)
+      setData(prev => [...prev, response.data.newClient])
     } catch (error) {
       console.error(error.message)
     }
@@ -47,6 +47,7 @@ function App() {
   const handleDeleteForm = async (id) => {
     try {
       await axios.delete(`${URLAPI}/${id}`)
+      setData(prev => prev.filter(client => client.id !== id))
     } catch (error) {
       console.log(error.message)
     }
@@ -56,7 +57,7 @@ function App() {
     setFormData(data.find((client) => client.id === id))
   }
 
-  const handleUpdateForm = async () => {
+  const handleUpdateForm = async (id) => {
     try {
       const response = await axios.put(`${URLAPI}/${id}`, formData)
       data.push(response.data)
