@@ -13,14 +13,11 @@ app.get("/clients", (req, res) => {
 })
 
 app.post("/clients", (req, res) => {
-  const {name, email, phoneNumber, enterprise} = req.body
+  const result = req.body
 
   const newClient = {
     id: crypto.randomUUID(),
-    name,
-    email,
-    phoneNumber,
-    enterprise
+    ...result
   }
 
   CLIENTS.push(newClient)
@@ -32,17 +29,16 @@ app.put("/clients/:id", (req, res) => {
   const {id} = req.params
   const clientId = CLIENTS.findIndex(client => client.id === id)
 
-  const {name, email, phoneNumber, enterprise} = req.body
+  const result = req.body
 
-  CLIENTS[clientId] = {
-    id,
-    name,
-    email,
-    phoneNumber,
-    enterprise
+  const updateClient = {
+    ...CLIENTS[clientId],
+    ...result
   }
 
-  res.status(202).json(CLIENTS[clientId])
+  CLIENTS[clientId] = updateClient
+
+  res.status(202).json(updateClient)
 })
 
 app.delete("/clients/:id", (req, res) => {
